@@ -35,11 +35,12 @@ public class RingtoneChanger {
     ImageView iconView;
     TextView areaNameView, musicTitleView;
     AudioManager am;
-    SharedPreferences saveData = context.getSharedPreferences("Data", context.MODE_WORLD_READABLE | context.MODE_WORLD_WRITEABLE);
+    SharedPreferences saveData;
 
     //こんすとらくた
     public RingtoneChanger(MainActivity ma){
         context = ma;
+        saveData = context.getSharedPreferences("Data", context.MODE_WORLD_READABLE | context.MODE_WORLD_WRITEABLE);
         iconView = (ImageView)context.findViewById(R.id.area_icon);
         areaNameView = (TextView)context.findViewById(R.id.area_status);
         musicTitleView = (TextView)context.findViewById(R.id.music_status);
@@ -51,6 +52,7 @@ public class RingtoneChanger {
         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         loadSaveData();
+        Log.d("RingtoneChanger", "PresetSize = " + Integer.toString(presets.size()));
     }
 
     private void loadSaveData(){
