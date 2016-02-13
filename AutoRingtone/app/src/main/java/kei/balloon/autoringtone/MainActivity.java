@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
             RingtonePreset ringtonePreset = new RingtonePreset(
                     data.getStringExtra("presetName"),
                     Uri.fromFile(new File(data.getStringExtra("filePath"))),
-                    new LatLng(data.getIntExtra("lat", 0), data.getIntExtra("lng", 0)),
+                    new LatLng(data.getDoubleExtra("lat", 0), data.getDoubleExtra("lng", 0)),
                     data.getIntExtra("iconId", R.drawable.ic_help)
             );
             rc.addPreset(ringtonePreset);

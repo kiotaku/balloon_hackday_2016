@@ -66,7 +66,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = ((EditText) findViewById(R.id.add_preset_preset_name)).getText().toString();
-                if (!name.isEmpty() && !musicPath.isEmpty() && lat == 0 && lng == 0 && iconId == R.drawable.ic_help) {
+                if (!name.isEmpty() && !musicPath.isEmpty() && lat != 0 && lng != 0 && iconId != R.drawable.ic_help) {
                     Intent intent = new Intent();
                     intent.putExtra("presetName", name);
                     intent.putExtra("filePath", musicPath);
@@ -74,6 +74,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                     intent.putExtra("lng", lng);
                     intent.putExtra("iconId", iconId);
                     setResult(RESULT_OK, intent);
+                    finish();
                 } else {
                     new AlertDialog.Builder(activity)
                             .setMessage("入力されていないアイテムがあります")
@@ -103,6 +104,9 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                         false));
             } else if(requestCode == REQUEST_MUSIC_PATH) {
                 musicPath = data.getStringExtra("path");
+                String[] tmp = musicPath.split("/");
+                String musicTitle = tmp[tmp.length-1];
+                ((TextView) findViewById(R.id.add_preset_sound_file_name)).setText(musicTitle);
                 Toast.makeText(this, "path:"+musicPath, Toast.LENGTH_SHORT).show();
             }
             
