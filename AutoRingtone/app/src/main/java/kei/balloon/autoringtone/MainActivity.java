@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity{
         ma= this;
         rc = new RingtoneChanger(this);
 
-        gps = new Gps(this);
+        gps = new Gps(this,rc);
         gps.requestLocation();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
