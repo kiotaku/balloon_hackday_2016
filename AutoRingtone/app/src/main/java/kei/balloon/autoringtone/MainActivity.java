@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 //Intent intent = new Intent(ma, IconSelectActivity.class);
                 //startActivity(intent);
-                //Intent intent = new Intent(ma, Setting.class);
+                Intent intent = new Intent(ma, Setting.class);
                 startActivity(intent);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

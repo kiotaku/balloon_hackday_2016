@@ -2,30 +2,59 @@ package kei.balloon.autoringtone;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by kei on 2016/02/13.
  */
-public class Setting extends AppCompatActivity {
+public class Setting extends AppCompatActivity{
 
     // GoogleMapオブジェクトの宣言
     private GoogleMap googleMap;
+
+    //画面上にあるボタンなどのView
+    private EditText searchETxt;
+
+
+    //選択した場所のLatLng
+    private LatLng targetLatLng;
+    private Address targetAddress;
+    private String targetName;
+
+    Setting set;
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_area);
+
+        set = this;
+
+        searchETxt = (EditText) findViewById(R.id.search_edit_txt);
 
         // MapFragmentオブジェクトを取得
         MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -48,6 +77,55 @@ public class Setting extends AppCompatActivity {
         // GoogleMapが使用不可のときのためにtry catchで囲っています。
         catch (Exception e) {
         }
+
+        searchETxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if (event.getAction() == KeyEvent.ACTION_UP) {
+                        // ソフトキーボードを隠す
+                        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        if (!searchETxt.getText().equals(null))
+                            try {
+                                targetAddress = nameToAddress(searchETxt.getText().toString(), set);
+                                if (!targetAddress.equals(null)) {
+                                    targetName = targetAddress.getFeatureName();
+                                    targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
+                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
+                                    // アラートダイアログのタイトルを設定します
+                                    alertDialogBuilder.setTitle("検索結果");
+                                    // アラートダイアログのメッセージを設定します
+                                    alertDialogBuilder.setMessage(targetName + "でいいですか?");
+                                    // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                                    alertDialogBuilder.setPositiveButton("OK",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                }
+                                            });
+                                    // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                                    alertDialogBuilder.setNegativeButton("CANCEL",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                }
+                                            });
+                                    // アラートダイアログのキャンセルが可能かどうかを設定します
+                                    alertDialogBuilder.setCancelable(true);
+                                    AlertDialog alertDialog = alertDialogBuilder.create();
+                                    // アラートダイアログを表示します
+                                    alertDialog.show();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     // 地図の初期設定メソッド
@@ -77,4 +155,28 @@ public class Setting extends AppCompatActivity {
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
     }
 
+
+
+    // 座標から住所文字列へ変換
+    public Address nameToAddress(String localeName, Context context) throws IOException
+    {
+        // 変換実行
+        Geocoder coder = new Geocoder(context, Locale.JAPAN);
+        List<Address> list_address = coder.getFromLocationName(localeName,5);
+        if (!list_address.isEmpty()){
+            // 東京駅の位置、ズーム設定
+            CameraPosition camerapos = new CameraPosition.Builder()
+                    .target(new LatLng(list_address.get(0).getLatitude(), list_address.get(0).getLongitude())).zoom(15.5f).build();
+            // 地図の中心の変更する
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
+            // ピンを立てる
+            LatLng position = new LatLng(list_address.get(0).getLatitude(), list_address.get(0).getLongitude());
+            MarkerOptions options = new MarkerOptions();
+            options.position(position);
+            options.title(list_address.get(0).getFeatureName());
+            googleMap.addMarker(options);
+            return list_address.get(0);
+        }
+        return null;
+    }
 }
