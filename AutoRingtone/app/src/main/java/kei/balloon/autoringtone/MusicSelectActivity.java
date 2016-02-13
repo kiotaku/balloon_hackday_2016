@@ -9,8 +9,6 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.view.menu.ListMenuItemView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +16,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by subroh0508 on 16/02/13.
@@ -34,7 +31,7 @@ public class MusicSelectActivity extends Activity {
 		setContentView(R.layout.activity_music_select);
 
 		ListView listView = (ListView)findViewById(R.id.music_select_list);
-		adapter = new ArrayAdapter<String>(this, R.layout.music_select_item);
+		adapter = new ArrayAdapter<String>(this, R.layout.music_select_item,R.id.music_name);
 
 		setMusicList();
 
