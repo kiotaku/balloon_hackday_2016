@@ -31,9 +31,16 @@ public class Gps implements LocationListener{
 	private String date;
 	private double speed;
 
+	private RingtoneChanger rc;
+
 	private int status;
 
 	public Gps(Context c) {
+		this(c, null);
+	}
+
+	public Gps(Context c, RingtoneChanger rc){
+		this.rc = rc;
 		context = c;
 		locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 		latlng = new LatLng(0.0, 0.0);
@@ -45,6 +52,7 @@ public class Gps implements LocationListener{
 			context.startActivity(settingsIntent);
 		}
 	}
+
 
 	public boolean gpsIsEnabled() {
 		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -129,6 +137,7 @@ public class Gps implements LocationListener{
 		latlng = new LatLng(location.getLatitude(), location.getLongitude());
 		date = new SimpleDateFormat(DATE_FORMAT).format(location.getTime());
 		speed = location.getSpeed();
+		rc.setCurrentLocation(latlng); //RingtoneChangerに現在地を設定
 	}
 
 	@Override
