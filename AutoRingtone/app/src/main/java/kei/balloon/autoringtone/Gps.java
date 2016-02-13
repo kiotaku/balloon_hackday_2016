@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -141,6 +142,11 @@ public class Gps implements LocationListener{
 		date = new SimpleDateFormat(DATE_FORMAT).format(location.getTime());
 		speed = location.getSpeed();
 		rc.setCurrentLocation(latlng, speed); //RingtoneChangerに現在地を設定
+
+		LatLng ll = rc.getPresetByName("秋葉原UDX").getLatLng();
+		float[] distance = new float[1];
+		Location.distanceBetween(ll.latitude, ll.longitude, latlng.latitude, latlng.longitude, distance);
+		//Toast.makeText(context, "dis:"+distance[0], Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

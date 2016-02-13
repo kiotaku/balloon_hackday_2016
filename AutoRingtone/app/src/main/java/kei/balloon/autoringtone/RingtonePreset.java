@@ -20,7 +20,7 @@ public class RingtonePreset {
     public static final int HOME = 3;
     public static final int TRAIN = 4;
 
-    public final static float RANGE = 1000;
+    public final static float RANGE = 150;
 
     public RingtonePreset(String n, Uri u, LatLng l, int iconIndex){
         uri = u;

@@ -155,6 +155,14 @@ public class RingtoneChanger {
         return activePreset;
     }
 
+    public RingtonePreset getPresetByName(String name) {
+        for(RingtonePreset p : presets)
+            if(p.getName().equals(name)) return p;
+
+        return null;
+    }
+
+
     public boolean isDefault(){
         return isDefault;
     }
@@ -164,29 +172,36 @@ public class RingtoneChanger {
     }
 
     public void updateState(){
-        if  (!isMoving){
-            if  (activePreset == null) return;
+        if  (!isDefault) {
 
-            switch (activePreset.getIconIndex()){
-                case RingtonePreset.SCHOOL:
-                    iconView.setImageResource(R.drawable.schoolicon);
-                    break;
-                case RingtonePreset.WORKSPACE:
-                    iconView.setImageResource(R.drawable.workspaceicon);
-                    break;
-                case RingtonePreset.HOME:
-                    iconView.setImageResource(R.drawable.houseicon);
-                    break;
+            if (!isMoving) {
+                if (activePreset == null) return;
+
+                switch (activePreset.getIconIndex()) {
+                    case RingtonePreset.SCHOOL:
+                        iconView.setImageResource(R.drawable.schoolicon);
+                        break;
+                    case RingtonePreset.WORKSPACE:
+                        iconView.setImageResource(R.drawable.workspaceicon);
+                        break;
+                    case RingtonePreset.HOME:
+                        iconView.setImageResource(R.drawable.houseicon);
+                        break;
+                }
+                areaNameView.setText(activePreset.getName());
+                String path = activePreset.getUri().getPath();
+                String[] tmp = path.split("/");
+                String musicTitle = tmp[tmp.length - 1].split("\\.")[0];
+                musicTitleView.setText(musicTitle);
+            } else {
+                iconView.setImageResource(R.drawable.onmoveicon);
+                areaNameView.setText("移動中...");
+                musicTitleView.setText("マナーモード中");
             }
-            areaNameView.setText(activePreset.getName());
-            String path = activePreset.getUri().getPath();
-            String[] tmp = path.split("/");
-            String musicTitle = tmp[tmp.length-1];
-            musicTitleView.setText(musicTitle);
         } else {
             iconView.setImageResource(R.drawable.onmoveicon);
-            areaNameView.setText("移動中...");
-            musicTitleView.setText("マナーモード中");
+            areaNameView.setText("default");
+            musicTitleView.setText("default");
         }
 
     }
