@@ -23,7 +23,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" >
+        tools:context=".MainActivity">
 
         <fragment
             android:id="@+id/map"
@@ -33,17 +33,19 @@
             />
 
         <FrameLayout
-            android:layout_width="320dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
             android:background="@drawable/style_round"
             android:id="@+id/frameLayout2"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="1">
 
                 <EditText
                     android:layout_width="255dp"
@@ -55,7 +57,8 @@
                     android:hint="Search"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="4dp"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:layout_weight="0.90" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -63,7 +66,9 @@
                     android:layout_height="wrap_content"
                     android:text="Go"
                     android:id="@+id/go"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical|right"
+                    android:background="#ffffff"
+                    android:layout_margin="5dp" />
 
             </LinearLayout>
         </FrameLayout>
