@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="wrap_content"
-			  android:textSize="20dp">
-</TextView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="horizontal" android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center_vertical">
+
+
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/imageView"
+		android:src="@drawable/ic_audiotrack_24dp"
+		android:layout_marginLeft="8dp" />
+
+	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+				android:id="@+id/music_name"
+				  android:orientation="vertical"
+				  android:layout_width="match_parent"
+				  android:layout_height="wrap_content"
+				  android:textSize="35dp"
+		android:layout_margin="5dp">
+	</TextView>
+</LinearLayout>
