@@ -108,7 +108,7 @@ public class RingtoneChanger {
         double min = 99999;
 
 
-        if  (Gps.TRAIN <= speed){
+        if  (1.0 <= speed){
             /*** debug ***/
             am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
             isMoving = true;
@@ -182,7 +182,7 @@ public class RingtoneChanger {
             String musicTitle = tmp[tmp.length-1];
             musicTitleView.setText(musicTitle);
         } else {
-            iconView.setImageResource(R.drawable.trainicon);
+            iconView.setImageResource(R.drawable.onmoveicon);
             areaNameView.setText("移動中...");
             musicTitleView.setText("マナーモード中");
         }
