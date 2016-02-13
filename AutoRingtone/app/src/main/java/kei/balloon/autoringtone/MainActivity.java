@@ -1,6 +1,8 @@
 package kei.balloon.autoringtone;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity{
+    private static final int REQUEST_FINE_LOCATION = 1;
+    private static final int REQUEST_COARSE_LOCATION = 2;
+    private static final int REQUEST_INTERNET = 3;
 
     private ImageView areaIcon; //エリアのアイコンイメージ(メイン画面のやつ )
     private MainActivity ma;    //このアクティビティ
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity{
 
         ma= this;
         rc = new RingtoneChanger(this);
+
+        checkGpsPermission();
 
         gps = new Gps(this, rc);
         gps.requestLocation();
@@ -89,8 +96,33 @@ public class MainActivity extends AppCompatActivity{
 
         rc.addPreset(rp1);
         rc.addPreset(rp2);
-        ****************************/
+         ****************************/
 
+    }
+
+    private void checkGpsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+            if (checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_COARSE_LOCATION);
+            if (checkSelfPermission(android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{android.Manifest.permission.INTERNET}, REQUEST_INTERNET);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_FINE_LOCATION:
+                return;
+            case REQUEST_COARSE_LOCATION:
+                return;
+            case REQUEST_INTERNET:
+                return;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override

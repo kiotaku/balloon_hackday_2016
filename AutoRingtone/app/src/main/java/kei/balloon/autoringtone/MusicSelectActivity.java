@@ -21,7 +21,6 @@ import java.util.List;
  * Created by subroh0508 on 16/02/13.
  */
 public class MusicSelectActivity extends Activity {
-	private final static int REQUEST_READ_EXTERNAL_STORAGE = 1;
 	ArrayAdapter<String> adapter;
 	List<String> pathList = new ArrayList<String>();
 
@@ -48,11 +47,6 @@ public class MusicSelectActivity extends Activity {
 	}
 
 	private void setMusicList(){
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-				requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-		}
-
 		ContentResolver resolver = this.getContentResolver();
 		Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 		cursor.moveToFirst();
@@ -60,22 +54,5 @@ public class MusicSelectActivity extends Activity {
 			adapter.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
 			pathList.add(cursor.getString(cursor.getColumnIndex("_data")));
 		} while(cursor.moveToNext());
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-		switch (requestCode) {
-			case REQUEST_READ_EXTERNAL_STORAGE:
-				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-				} else {
-
-					// permission denied, boo! Disable the
-					// functionality that depends on this permission.
-				}
-				return;
-			default:
-				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
 	}
 }
