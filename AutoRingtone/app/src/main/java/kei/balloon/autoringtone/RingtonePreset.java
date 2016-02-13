@@ -15,6 +15,11 @@ public class RingtonePreset {
     LatLng location;
     int iconIndex;
 
+    public static final int SCHOOL = 1;
+    public static final int WORKSPACE = 2;
+    public static final int HOME = 3;
+    public static final int TRAIN = 4;
+
     public final static float RANGE = 1000;
 
     public RingtonePreset(String n, Uri u, LatLng l, int iconIndex){
