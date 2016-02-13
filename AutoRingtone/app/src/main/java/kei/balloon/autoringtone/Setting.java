@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -140,6 +141,14 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             e.printStackTrace();
         }
 
+        StringBuffer sb = new StringBuffer();
+
+        // adressの大区分から小区分までを改行で全結合
+        String s;
+        for (int i = 1; (s = targetAddress.getAddressLine(i)) != null; i++){
+            sb.append( s + "\n" );
+        }
+        targetName = sb.toString();
 
         googleMap.clear();
 
@@ -155,6 +164,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         }
         googleMap.addMarker(options);
     }
+
 
     // 座標から住所文字列へ変換
     public Address point2address(LatLng latlng)
@@ -174,11 +184,13 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
             // adressの大区分から小区分までを改行で全結合
             String s;
-            for (int i = 0; (s = address.getAddressLine(i)) != null; i++){
+            for (int i = 1; (s = address.getAddressLine(i)) != null; i++){
                 sb.append( s + "\n" );
             }
             return address;
 
+        }else{
+            Toast.makeText(Setting.this, "検索結果が見つかりません", Toast.LENGTH_SHORT).show();
         }
 
         return null;
@@ -203,6 +215,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             options.title(list_address.get(0).getFeatureName());
             googleMap.addMarker(options);
             return list_address.get(0);
+        }else{
+            Toast.makeText(Setting.this, "検索結果が見つかりません", Toast.LENGTH_SHORT).show();
         }
         return null;
     }
@@ -215,8 +229,14 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
                 try {
                         if(!searchETxt.getText().toString().equals("") ) targetAddress = nameToAddress(searchETxt.getText().toString(),set);
                         if(targetAddress !=null) {
-                            targetName = targetAddress.getFeatureName();
                             targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
+                            StringBuffer sb = new StringBuffer();
+                            // adressの大区分から小区分までを改行で全結合
+                            String s;
+                            for (int i = 1; (s = targetAddress.getAddressLine(i)) != null; i++){
+                                sb.append( s + "\n" );
+                            }
+                            targetName = sb.toString();
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
                             // アラートダイアログのタイトルを設定します
                             alertDialogBuilder.setTitle("検索結果");
