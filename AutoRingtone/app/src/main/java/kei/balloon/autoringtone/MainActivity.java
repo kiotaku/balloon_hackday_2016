@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
         areaStatus.setText("test area");
 
         areaIcon = (ImageView) findViewById(R.id.area_icon);
-        areaIcon.setImageResource(R.drawable.houseicon);
+        areaIcon.setImageResource(R.drawable.ic_help);
 
         /*
             //File f = new File("/storage/emulated/0/Music/HAPPY/HAPPY.mp3");
