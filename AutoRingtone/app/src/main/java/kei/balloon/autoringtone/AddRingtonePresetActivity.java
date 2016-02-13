@@ -103,6 +103,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                         getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
                         getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
                         false));
+                iconId = getPresetIconID(iconId);
             } else if(requestCode == REQUEST_MUSIC_PATH) {
                 musicPath = data.getStringExtra("path");
                 String[] tmp = musicPath.split("/");
@@ -113,5 +114,13 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private int getPresetIconID(int iconId){
+        if(iconId == R.drawable.schoolicon) return RingtonePreset.SCHOOL;
+        if(iconId == R.drawable.houseicon) return RingtonePreset.HOME;
+        if(iconId == R.drawable.workspaceicon) return RingtonePreset.WORKSPACE;
+        if(iconId == R.drawable.trainicon) return RingtonePreset.TRAIN;
+        return 0;
     }
 }
