@@ -1,5 +1,7 @@
 package kei.balloon.autoringtone;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by kazuki on 2016/02/13.
  */
