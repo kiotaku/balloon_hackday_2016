@@ -1,5 +1,9 @@
 package kei.balloon.autoringtone;
 
+import android.net.Uri;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.net.URI;
 
 /**
@@ -8,21 +12,28 @@ import java.net.URI;
 public class RingtonePreset {
 
     private String name;
-    private URI uri;
+    private Uri uri;
     private boolean isMoving;
     LatLng location;
 
-    public final static double RANGE = 100;
+    public final static float RANGE = 100;
 
-    public RingtonePreset(String n, URI u, LatLng l){
+    public RingtonePreset(String n, Uri u, LatLng l){
         uri = u;
         location = l;
         name = n;
+    }
+
+    public LatLng getLatLng(){
+        return location;
     }
 
     public String getName(){
         return name;
     }
 
+    public Uri getUri(){
+        return uri;
+    }
 }
 

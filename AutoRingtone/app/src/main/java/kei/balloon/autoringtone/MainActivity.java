@@ -1,5 +1,8 @@
 package kei.balloon.autoringtone;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final int WRITE_SETTINGS = 1;
+    private Uri tmpU;
+    private RingtoneChanger rc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        rc = new RingtoneChanger(this);
+        File f = new File("/storage/emulated/0/Music/HAPPY/HAPPY.mp3");
+        Uri u = Uri.fromFile(f);
+        rc.setRingtone(u);
+
+
     }
 
     @Override
