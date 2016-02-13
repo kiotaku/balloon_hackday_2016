@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity{
                         .setAction("Action", null).show();
             }
         });
+
+        // todo: test data
+        TextView musicStatus = (TextView) findViewById(R.id.music_status);
+        TextView areaStatus = (TextView) findViewById(R.id.area_status);
+        musicStatus.setText("test music");
+        areaStatus.setText("test area");
 
         areaIcon = (ImageView) findViewById(R.id.area_icon);
         areaIcon.setImageResource(R.drawable.houseicon);
