@@ -43,7 +43,8 @@
 
         <activity
             android:name=".Setting"
-            android:label="Setting">
+            android:label="Setting"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
