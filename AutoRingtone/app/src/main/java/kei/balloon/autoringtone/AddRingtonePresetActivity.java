@@ -1,6 +1,7 @@
 package kei.balloon.autoringtone;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,13 +30,13 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ringtone_preset);
 
-        final Context context = this;
+        final Activity activity = this;
 
         Button location = (Button) findViewById(R.id.add_preset_location);
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Setting.class);
+                Intent intent = new Intent(activity, Setting.class);
                 startActivityForResult(intent, REQUEST_LOCATION);
             }
         });
@@ -52,7 +53,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, IconSelectActivity.class);
+                Intent intent = new Intent(activity, IconSelectActivity.class);
                 startActivityForResult(intent, REQUEST_ICON_ID);
             }
         });
@@ -63,13 +64,20 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = ((EditText) findViewById(R.id.add_preset_preset_name)).getText().toString();
                 String filePath = ((TextView) findViewById(R.id.add_preset_sound_file_name)).getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra("presetName", name);
-                intent.putExtra("filePath", filePath);
-                intent.putExtra("lat", lat);
-                intent.putExtra("lng", lng);
-                intent.putExtra("iconId", iconId);
-                setResult(RESULT_OK, intent);
+                if (!name.isEmpty() && !filePath.isEmpty() && lat == 0 && lng == 0 && iconId == R.drawable.ic_help) {
+                    Intent intent = new Intent();
+                    intent.putExtra("presetName", name);
+                    intent.putExtra("filePath", filePath);
+                    intent.putExtra("lat", lat);
+                    intent.putExtra("lng", lng);
+                    intent.putExtra("iconId", iconId);
+                    setResult(RESULT_OK, intent);
+                } else {
+                    new AlertDialog.Builder(activity)
+                            .setMessage("入力されていないアイテムがあります")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
             }
         });
     }
