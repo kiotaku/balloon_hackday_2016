@@ -6,12 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     private Gps gps; //位置情報を取得するクラス
 
     public static final int WRITE_SETTINGS = 1;
+    final static int REQUEST_ADD_PRESET = 2;
     private Uri tmpU;
     private RingtoneChanger rc;
 
@@ -46,19 +48,15 @@ public class MainActivity extends AppCompatActivity{
         ma= this;
         rc = new RingtoneChanger(this);
 
-        gps = new Gps(this,rc);
+        gps = new Gps(this, rc);
         gps.requestLocation();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(ma, IconSelectActivity.class);
-                //startActivity(intent);
-                Intent intent = new Intent(ma, Setting.class);
-                startActivity(intent);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ma, AddRingtonePresetActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_PRESET);
             }
         });
 
@@ -71,11 +69,41 @@ public class MainActivity extends AppCompatActivity{
         areaIcon = (ImageView) findViewById(R.id.area_icon);
         areaIcon.setImageResource(R.drawable.houseicon);
 
+        /*
+            //File f = new File("/storage/emulated/0/Music/HAPPY/HAPPY.mp3");
+            File f = new File("/storage/emulated/0/Music/01 海色.mp3");
+            Uri u = Uri.fromFile(f);
+            rc.setRingtone(u);
+        */
 
-        File f = new File("/storage/emulated/0/Music/HAPPY/HAPPY.mp3");
-        Uri u = Uri.fromFile(f);
-        rc.setRingtone(u);
+        /******* PRESET DEBUG *******/
+        File f;
+        Uri u;
+        f = new File("/storage/emulated/0/Music/01 海色.mp3");
+        u = Uri.fromFile(f);
+        RingtonePreset rp1 = new RingtonePreset("八王�?", u, new LatLng(35.6396765, 139.2967701), RingtonePreset.HOME);
+
+        f = new File("/storage/emulated/0/Music/01 海色.mp3");
+        u = Uri.fromFile(f);
+        RingtonePreset rp2 = new RingtonePreset("秋葉原UDX", u, new LatLng(35.6994511, 139.7726449), RingtonePreset.WORKSPACE);
+
+        rc.addPreset(rp1);
+        rc.addPreset(rp2);
+        /****************************/
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_ADD_PRESET && resultCode == RESULT_OK){
+            RingtonePreset ringtonePreset = new RingtonePreset(
+                    data.getStringExtra("presetName"),
+                    Uri.fromFile(new File(data.getStringExtra("filePath"))),
+                    new LatLng(data.getIntExtra("lat", 0), data.getIntExtra("lng", 0)),
+                    data.getIntExtra("iconId", R.drawable.ic_help)
+            );
+            rc.addPreset(ringtonePreset);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

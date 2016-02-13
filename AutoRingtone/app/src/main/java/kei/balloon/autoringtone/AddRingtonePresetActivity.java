@@ -85,6 +85,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
+
             if (requestCode == REQUEST_LOCATION) {
                 // todo: 返ってくるデータが決まったら考える
             } else if (requestCode == REQUEST_FILE_PATH){
@@ -99,6 +100,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                         getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
                         false));
             }
+            
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
