@@ -1,6 +1,7 @@
 package kei.balloon.autoringtone;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
@@ -34,6 +35,7 @@ public class RingtoneChanger {
     ImageView iconView;
     TextView areaNameView, musicTitleView;
     AudioManager am;
+    SharedPreferences saveData = context.getSharedPreferences("Data", context.MODE_WORLD_READABLE | context.MODE_WORLD_WRITEABLE);
 
     //こんすとらくた
     public RingtoneChanger(MainActivity ma){
@@ -47,6 +49,26 @@ public class RingtoneChanger {
 
         // AudioManager取得
         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        loadSaveData();
+    }
+
+    private void loadSaveData(){
+        List<RingtonePreset> savedPreset = new ArrayList<>();
+        int presetCount = saveData.getInt("count", 0);
+        for (int i=0; i<presetCount; i++){
+            String uriS = saveData.getString("Uri" + Integer.toString(i), "");
+            File f = new File(uriS);
+            Uri uri = Uri.fromFile(f);
+
+            String name = saveData.getString("Name" + Integer.toString(i), "");
+            int iconIndex = saveData.getInt("IconIndex" + Integer.toString(i), 1);
+            double lat = saveData.getFloat("Lat" + Integer.toString(i), 0.0f);
+            double lng = saveData.getFloat("Lng" + Integer.toString(i), 0.0f);
+            RingtonePreset rp = new RingtonePreset(name, uri, new LatLng(lat, lng), iconIndex);
+            savedPreset.add(rp);
+        }
+        presets = savedPreset;
     }
 
     //現在地を設定
@@ -65,6 +87,18 @@ public class RingtoneChanger {
     //プリセットを追加
     public void addPreset(RingtonePreset rp){
         presets.add(rp);
+        SharedPreferences.Editor e = saveData.edit();
+        e.putInt("count", presets.size());
+        int itr = 0;
+        for (RingtonePreset p : presets){
+            e.putString("Uri" + Integer.toString(itr), p.getUri().getPath());
+            e.putString("Name" + Integer.toString(itr), p.getName());
+            e.putInt("IconIndex" + Integer.toString(itr), p.getIconIndex());
+            e.putFloat("Lat" + Integer.toString(itr), (float) p.getLatLng().latitude);
+            e.putFloat("Lng" + Integer.toString(itr), (float) p.getLatLng().longitude);
+            itr++;
+        }
+        e.commit();
     }
 
     //アクティブなプリセットを設定
