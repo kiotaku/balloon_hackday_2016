@@ -14,13 +14,15 @@ public class RingtonePreset {
     private Uri uri;
     private boolean isMoving;
     LatLng location;
+    int iconIndex;
 
     public final static float RANGE = 100;
 
-    public RingtonePreset(String n, Uri u, LatLng l){
+    public RingtonePreset(String n, Uri u, LatLng l, int iconIndex){
         uri = u;
         location = l;
         name = n;
+        this.iconIndex = iconIndex;
     }
 
     public LatLng getLatLng(){
@@ -33,6 +35,10 @@ public class RingtonePreset {
 
     public Uri getUri(){
         return uri;
+    }
+
+    public int getIconIndex(){
+        return iconIndex;
     }
 }
 

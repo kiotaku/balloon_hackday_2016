@@ -74,4 +74,8 @@ public class RingtoneChanger {
         RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION, u);
     }
 
+    public RingtonePreset getActivePreset(){
+        return activePreset;
+    }
+
 }
