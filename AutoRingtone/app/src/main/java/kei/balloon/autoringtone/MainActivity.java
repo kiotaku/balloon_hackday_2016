@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ma, IconSelectActivity.class);
+                //Intent intent = new Intent(ma, IconSelectActivity.class);
                 //startActivity(intent);
                 //Intent intent = new Intent(ma, Setting.class);
                 startActivity(intent);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
         TextView areaStatus = (TextView) findViewById(R.id.area_status);
         musicStatus.setText("test music");
         areaStatus.setText("test area");
-        
+
         areaIcon = (ImageView) findViewById(R.id.area_icon);
         areaIcon.setImageResource(R.drawable.houseicon);
 

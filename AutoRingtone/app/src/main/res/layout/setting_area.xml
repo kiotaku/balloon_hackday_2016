@@ -32,6 +32,60 @@
             android:layout_height="match_parent"
             />
 
+        <FrameLayout
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/style_round_shadow"
+            android:layout_marginLeft="21.5dp"
+            android:id="@+id/frameLayout"></FrameLayout>
+
+        <FrameLayout
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/style_round"
+            android:id="@+id/frameLayout2">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editText"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="Search"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="4dp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/frameLayout2"
+            android:layout_marginBottom="15dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="cancel"
+                android:id="@+id/button"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ok"
+                android:id="@+id/button2"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>
