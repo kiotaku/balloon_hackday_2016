@@ -22,19 +22,25 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="80dp"
         android:id="@+id/relativeLayout">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
             android:id="@+id/area_icon"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/area_icon"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 
