@@ -108,7 +108,7 @@ public class RingtoneChanger {
         double min = 99999;
 
 
-        if  (1.0 <= speed){
+        if  (3.0 <= speed){
             /*** debug ***/
             am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
             isMoving = true;
@@ -172,11 +172,10 @@ public class RingtoneChanger {
     }
 
     public void updateState(){
-        if  (!isDefault) {
+        if (!isMoving) {
+            if (activePreset == null) return;
 
-            if (!isMoving) {
-                if (activePreset == null) return;
-
+            if(!isDefault) {
                 switch (activePreset.getIconIndex()) {
                     case RingtonePreset.SCHOOL:
                         iconView.setImageResource(R.drawable.schoolicon);
@@ -195,14 +194,13 @@ public class RingtoneChanger {
                 musicTitleView.setText(musicTitle);
             } else {
                 iconView.setImageResource(R.drawable.onmoveicon);
-                areaNameView.setText("移動中...");
-                musicTitleView.setText("マナーモード中");
+                areaNameView.setText("default");
+                musicTitleView.setText("default");
             }
         } else {
             iconView.setImageResource(R.drawable.onmoveicon);
-            areaNameView.setText("default");
-            musicTitleView.setText("default");
+            areaNameView.setText("移動中...");
+            musicTitleView.setText("マナーモード中");
         }
-
     }
 }
