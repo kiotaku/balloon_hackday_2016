@@ -134,12 +134,14 @@ public class RingtoneChanger {
     //着信音をアクティブなプリセットに設定
     public void setRingtoneOfActivePreset(){
         RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE, activePreset.getUri());
+        RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION, activePreset.getUri());
         isDefault = false;
     }
 
     //着信音をデフォルトのプリセットに設定
     public void  setRingtoneOfDefaultPreset(){
         RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE, defaultPresetUri);
+        RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION, defaultPresetUri);
         isDefault = true;
     }
 
