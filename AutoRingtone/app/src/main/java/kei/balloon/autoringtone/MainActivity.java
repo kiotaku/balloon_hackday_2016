@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity{
     private ImageView areaIcon; //エリアのアイコンイメージ(メイン画面のやつ )
     private MainActivity ma;    //このアクティビティ
 
+    private Gps gps; //位置情報を取得するクラス
+
     public static final int WRITE_SETTINGS = 1;
     private Uri tmpU;
     private RingtoneChanger rc;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         ma= this;
+
+        gps = new Gps(this);
+        gps.requestLocation();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
