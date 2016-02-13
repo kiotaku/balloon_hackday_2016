@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         ma= this;
+        rc = new RingtoneChanger(this);
 
         gps = new Gps(this);
         gps.requestLocation();
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity{
         areaIcon = (ImageView) findViewById(R.id.area_icon);
         areaIcon.setImageResource(R.drawable.houseicon);
 
-        rc = new RingtoneChanger(this);
+
         File f = new File("/storage/emulated/0/Music/HAPPY/HAPPY.mp3");
         Uri u = Uri.fromFile(f);
         rc.setRingtone(u);
