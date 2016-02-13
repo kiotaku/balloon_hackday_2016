@@ -11,10 +11,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * Created by kei on 2016/02/13.
  */
-public class Setting extends AppCompatActivity{
+public class Setting extends AppCompatActivity implements View.OnClickListener{
 
     // GoogleMapオブジェクトの宣言
     private GoogleMap googleMap;
@@ -43,8 +43,11 @@ public class Setting extends AppCompatActivity{
     private LatLng targetLatLng;
     private Address targetAddress;
     private String targetName;
+    private Button searchBtn;
 
     Setting set;
+
+    private InputMethodManager inputMethodManager;
 
     @SuppressLint("NewApi")
     @Override
@@ -55,10 +58,15 @@ public class Setting extends AppCompatActivity{
         set = this;
 
         searchETxt = (EditText) findViewById(R.id.search_edit_txt);
+        searchBtn = (Button) findViewById(R.id.go);
+        searchBtn.setOnClickListener(this);
 
         // MapFragmentオブジェクトを取得
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+
+        //キーボード表示を制御するためのオブジェクト
+        inputMethodManager =  (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
         try {
             // GoogleMapオブジェクトの取得
@@ -78,54 +86,6 @@ public class Setting extends AppCompatActivity{
         catch (Exception e) {
         }
 
-        searchETxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // TODO Auto-generated method stub
-                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        // ソフトキーボードを隠す
-                        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        if (!searchETxt.getText().equals(null))
-                            try {
-                                targetAddress = nameToAddress(searchETxt.getText().toString(), set);
-                                if (!targetAddress.equals(null)) {
-                                    targetName = targetAddress.getFeatureName();
-                                    targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
-                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
-                                    // アラートダイアログのタイトルを設定します
-                                    alertDialogBuilder.setTitle("検索結果");
-                                    // アラートダイアログのメッセージを設定します
-                                    alertDialogBuilder.setMessage(targetName + "でいいですか?");
-                                    // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                                    alertDialogBuilder.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                }
-                                            });
-                                    // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                                    alertDialogBuilder.setNegativeButton("CANCEL",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                }
-                                            });
-                                    // アラートダイアログのキャンセルが可能かどうかを設定します
-                                    alertDialogBuilder.setCancelable(true);
-                                    AlertDialog alertDialog = alertDialogBuilder.create();
-                                    // アラートダイアログを表示します
-                                    alertDialog.show();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     // 地図の初期設定メソッド
@@ -178,5 +138,46 @@ public class Setting extends AppCompatActivity{
             return list_address.get(0);
         }
         return null;
+    }
+
+    @Override
+    public void onClick(View v) {
+            inputMethodManager.hideSoftInputFromWindow(searchETxt.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            if (!searchETxt.getText().equals(null))
+                try {
+                    targetAddress = nameToAddress(searchETxt.getText().toString(), set);
+                    if (!targetAddress.equals(null)) {
+                        targetName = targetAddress.getFeatureName();
+                        targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
+                        // アラートダイアログのタイトルを設定します
+                        alertDialogBuilder.setTitle("検索結果");
+                        // アラートダイアログのメッセージを設定します
+                        alertDialogBuilder.setMessage(targetName + "でいいですか?");
+                        // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                        alertDialogBuilder.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        
+                                    }
+                                });
+                        // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                        alertDialogBuilder.setNegativeButton("CANCEL",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        searchETxt.setText("");
+                                    }
+                                });
+                        // アラートダイアログのキャンセルが可能かどうかを設定します
+                        alertDialogBuilder.setCancelable(true);
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        // アラートダイアログを表示します
+                        alertDialog.show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
     }
 }
