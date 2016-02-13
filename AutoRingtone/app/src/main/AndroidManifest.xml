@@ -42,13 +42,16 @@
 
         <activity
             android:name=".Setting"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:label="Setting">
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".MusicSelectActivity"
+            android:label="MusicSelect">
+        </activity>
+        <activity
+            android:name=".AddRingtonePresetActivity"
+            android:label="RingtonePreset">
         </activity>
     </application>
 
@@ -57,5 +60,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 外部ストレージパーミッション -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
