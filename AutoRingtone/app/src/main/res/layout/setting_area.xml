@@ -53,7 +53,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/editText"
+                android:id="@+id/search_edit_txt"
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
@@ -62,29 +62,6 @@
                 android:layout_marginBottom="4dp" />
         </FrameLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/frameLayout2"
-            android:layout_marginBottom="15dp">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="cancel"
-                android:id="@+id/button"
-                android:layout_weight="1" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="ok"
-                android:id="@+id/button2"
-                android:layout_weight="1" />
-        </LinearLayout>
 
     </RelativeLayout>
 
