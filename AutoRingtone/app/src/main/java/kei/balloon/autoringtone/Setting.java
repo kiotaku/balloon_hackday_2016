@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -122,7 +123,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
     {
         // 変換実行
         Geocoder coder = new Geocoder(context, Locale.JAPAN);
-        List<Address> list_address = coder.getFromLocationName(localeName,5);
+        List<Address> list_address = coder.getFromLocationName(localeName, 5);
         if (!list_address.isEmpty()){
             // 東京駅の位置、ズーム設定
             CameraPosition camerapos = new CameraPosition.Builder()
@@ -159,7 +160,12 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        
+                                        Intent intent = new Intent();
+                                        intent.putExtra("lat", targetLatLng.latitude);
+                                        intent.putExtra("lng", targetLatLng.longitude);
+                                        intent.putExtra("locationName", targetName);
+                                        setResult(RESULT_OK, intent);
+                                        finish();
                                     }
                                 });
                         // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します

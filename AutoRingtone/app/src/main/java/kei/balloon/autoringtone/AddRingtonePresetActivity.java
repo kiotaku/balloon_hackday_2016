@@ -87,7 +87,9 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
 
             if (requestCode == REQUEST_LOCATION) {
-                // todo: 返ってくるデータが決まったら考える
+                lat = data.getDoubleExtra("lat", 0);
+                lng = data.getDoubleExtra("lng", 0);
+                ((TextView) findViewById(R.id.add_preset_location_name)).setText(data.getStringExtra("locationName"));
             } else if (requestCode == REQUEST_FILE_PATH){
                 // todo: 返ってくるデータが決まったら考える
             } else if (requestCode == REQUEST_ICON_ID) {
