@@ -6,13 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 
@@ -24,8 +23,6 @@ public class MainActivity extends AppCompatActivity{
     private Gps gps; //位置情報を取得するクラス
 
     public static final int WRITE_SETTINGS = 1;
-    final static int REQUEST_ADD_PRESET = 2;
-
     private Uri tmpU;
     private RingtoneChanger rc;
 
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
         Uri u;
         f = new File("/storage/emulated/0/Music/01 海色.mp3");
         u = Uri.fromFile(f);
-        RingtonePreset rp1 = new RingtonePreset("八王子", u, new LatLng(35.6396765, 139.2967701), RingtonePreset.HOME);
+        RingtonePreset rp1 = new RingtonePreset("八王�?", u, new LatLng(35.6396765, 139.2967701), RingtonePreset.HOME);
 
         f = new File("/storage/emulated/0/Music/01 海色.mp3");
         u = Uri.fromFile(f);
