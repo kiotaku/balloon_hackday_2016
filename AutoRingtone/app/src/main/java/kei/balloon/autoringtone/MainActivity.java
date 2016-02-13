@@ -1,22 +1,17 @@
 ﻿package kei.balloon.autoringtone;
 
-import android.content.Context;
 import android.content.Intent;
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.io.File;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -41,7 +36,7 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ma, IconSelectActivity.class);
+                //Intent intent = new Intent(ma, IconSelectActivity.class);
                 //startActivity(intent);
                 Intent intent = new Intent(ma, Setting.class);
                 startActivity(intent);
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
         TextView areaStatus = (TextView) findViewById(R.id.area_status);
         musicStatus.setText("test music");
         areaStatus.setText("test area");
-        
+
         areaIcon = (ImageView) findViewById(R.id.area_icon);
         areaIcon.setImageResource(R.drawable.houseicon);
 
