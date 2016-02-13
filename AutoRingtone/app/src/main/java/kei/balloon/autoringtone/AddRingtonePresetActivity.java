@@ -66,11 +66,10 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = ((EditText) findViewById(R.id.add_preset_preset_name)).getText().toString();
-                String filePath = ((TextView) findViewById(R.id.add_preset_sound_file_name)).getText().toString();
-                if (!name.isEmpty() && !filePath.isEmpty() && lat == 0 && lng == 0 && iconId == R.drawable.ic_help) {
+                if (!name.isEmpty() && !musicPath.isEmpty() && lat == 0 && lng == 0 && iconId == R.drawable.ic_help) {
                     Intent intent = new Intent();
                     intent.putExtra("presetName", name);
-                    intent.putExtra("filePath", filePath);
+                    intent.putExtra("filePath", musicPath);
                     intent.putExtra("lat", lat);
                     intent.putExtra("lng", lng);
                     intent.putExtra("iconId", iconId);
