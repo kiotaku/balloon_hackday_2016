@@ -2,7 +2,8 @@ package kei.balloon.autoringtone;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
 
     final static int REQUEST_LOCATION = 1;
     final static int REQUEST_ICON_ID = 2;
+    final static int REQUEST_FILE_PATH = 3;
 
     private double lat = 0;
     private double lng = 0;
@@ -77,17 +79,17 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_LOCATION) {
                 // todo: 返ってくるデータが決まったら考える
+            } else if (requestCode == REQUEST_FILE_PATH){
+                // todo: 返ってくるデータが決まったら考える
             } else if (requestCode == REQUEST_ICON_ID) {
                 ImageButton icon = (ImageButton) findViewById(R.id.add_preset_icon_select);
                 iconId = data.getIntExtra("iconId", R.drawable.ic_help);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    icon.setImageDrawable(
-                            getResources().getDrawable(iconId, null));
-                } else {
-                    icon.setImageDrawable(
-                            getResources().getDrawable(iconId));
-
-                }
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), iconId);
+                icon.setImageBitmap(Bitmap.createScaledBitmap(
+                        bitmap,
+                        getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
+                        getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
+                        false));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

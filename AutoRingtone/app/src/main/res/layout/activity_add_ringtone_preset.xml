@@ -97,8 +97,8 @@
         android:layout_marginLeft="20dp"/>
 
     <ImageButton
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/add_ringtone_preset_image_button_dp"
+        android:layout_height="@dimen/add_ringtone_preset_image_button_dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/ic_brightness"
         android:src="@drawable/ic_help"
