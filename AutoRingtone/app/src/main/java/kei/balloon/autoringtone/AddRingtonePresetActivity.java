@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by takumi on 2016/02/13.
@@ -20,11 +21,12 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
 
     final static int REQUEST_LOCATION = 1;
     final static int REQUEST_ICON_ID = 2;
-    final static int REQUEST_FILE_PATH = 3;
+    final static int REQUEST_MUSIC_PATH = 3;
 
     private double lat = 0;
     private double lng = 0;
     private int iconId = R.drawable.ic_help;
+    private String musicPath;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,8 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
         fileSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo: FileSelectActivityを作る
+                Intent intent = new Intent(activity, MusicSelectActivity.class);
+                startActivityForResult(intent, REQUEST_MUSIC_PATH);
             }
         });
 
@@ -90,8 +93,6 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                 lat = data.getDoubleExtra("lat", 0);
                 lng = data.getDoubleExtra("lng", 0);
                 ((TextView) findViewById(R.id.add_preset_location_name)).setText(data.getStringExtra("locationName"));
-            } else if (requestCode == REQUEST_FILE_PATH){
-                // todo: 返ってくるデータが決まったら考える
             } else if (requestCode == REQUEST_ICON_ID) {
                 ImageButton icon = (ImageButton) findViewById(R.id.add_preset_icon_select);
                 iconId = data.getIntExtra("iconId", R.drawable.ic_help);
@@ -101,6 +102,9 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
                         getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
                         getResources().getDimensionPixelSize(R.dimen.add_ringtone_preset_image_button_dp),
                         false));
+            } else if(requestCode == REQUEST_MUSIC_PATH) {
+                musicPath = data.getStringExtra("path");
+                Toast.makeText(this, "path:"+musicPath, Toast.LENGTH_SHORT).show();
             }
             
         }
