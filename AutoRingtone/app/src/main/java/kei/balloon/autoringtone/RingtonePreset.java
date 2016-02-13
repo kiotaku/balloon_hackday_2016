@@ -12,11 +12,10 @@ public class RingtonePreset {
 
     private String name;
     private Uri uri;
-    private boolean isMoving;
     LatLng location;
     int iconIndex;
 
-    public final static float RANGE = 100;
+    public final static float RANGE = 1000;
 
     public RingtonePreset(String n, Uri u, LatLng l, int iconIndex){
         uri = u;

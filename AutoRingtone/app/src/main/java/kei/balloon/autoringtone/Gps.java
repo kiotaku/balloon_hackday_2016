@@ -137,7 +137,7 @@ public class Gps implements LocationListener{
 		latlng = new LatLng(location.getLatitude(), location.getLongitude());
 		date = new SimpleDateFormat(DATE_FORMAT).format(location.getTime());
 		speed = location.getSpeed();
-		rc.setCurrentLocation(latlng); //RingtoneChangerに現在地を設定
+		rc.setCurrentLocation(latlng, speed); //RingtoneChangerに現在地を設定
 	}
 
 	@Override
