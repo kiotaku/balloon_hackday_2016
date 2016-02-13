@@ -143,10 +143,10 @@ public class Gps implements LocationListener{
 		speed = location.getSpeed();
 		rc.setCurrentLocation(latlng, speed); //RingtoneChangerに現在地を設定
 
-		LatLng ll = rc.getPresetByName("秋葉原UDX").getLatLng();
-		float[] distance = new float[1];
-		Location.distanceBetween(ll.latitude, ll.longitude, latlng.latitude, latlng.longitude, distance);
-		//Toast.makeText(context, "dis:"+distance[0], Toast.LENGTH_SHORT).show();
+		//LatLng ll = rc.getPresetByName("秋葉原UDX").getLatLng();
+		//float[] distance = new float[1];
+		//Location.distanceBetween(ll.latitude, ll.longitude, latlng.latitude, latlng.longitude, distance);
+		//Toast.makeText(context, "dis:"+distance[0], Toast.LENGTH_SHORT).show();*/
 	}
 
 	@Override
