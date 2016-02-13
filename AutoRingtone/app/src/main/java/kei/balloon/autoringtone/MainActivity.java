@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -25,6 +24,8 @@ public class MainActivity extends AppCompatActivity{
     private Gps gps; //位置情報を取得するクラス
 
     public static final int WRITE_SETTINGS = 1;
+    final static int REQUEST_ADD_PRESET = 2;
+
     private Uri tmpU;
     private RingtoneChanger rc;
 
@@ -55,12 +56,8 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(ma, IconSelectActivity.class);
-                //startActivity(intent);
-                Intent intent = new Intent(ma, Setting.class);
-                startActivity(intent);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ma, AddRingtonePresetActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_PRESET);
             }
         });
 
@@ -97,4 +94,17 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_ADD_PRESET && resultCode == RESULT_OK){
+            RingtonePreset ringtonePreset = new RingtonePreset(
+                    data.getStringExtra("presetName"),
+                    Uri.fromFile(new File(data.getStringExtra("filePath"))),
+                    new LatLng(data.getIntExtra("lat", 0), data.getIntExtra("lng", 0)),
+                    data.getIntExtra("iconId", R.drawable.ic_help)
+            );
+            rc.addPreset(ringtonePreset);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
