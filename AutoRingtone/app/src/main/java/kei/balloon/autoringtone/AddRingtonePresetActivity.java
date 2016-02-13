@@ -8,10 +8,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 /**
  * Created by takumi on 2016/02/13.
@@ -32,7 +33,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
 
         final Activity activity = this;
 
-        Button location = (Button) findViewById(R.id.add_preset_location);
+        BootstrapButton location = (BootstrapButton) findViewById(R.id.add_preset_location);
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +42,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             }
         });
 
-        Button fileSelect = (Button) findViewById(R.id.add_preset_sound_file);
+        BootstrapButton fileSelect = (BootstrapButton) findViewById(R.id.add_preset_sound_file);
         fileSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +59,7 @@ public class AddRingtonePresetActivity extends AppCompatActivity {
             }
         });
 
-        Button execute = (Button) findViewById(R.id.add_preset_execute);
+        BootstrapButton execute = (BootstrapButton) findViewById(R.id.add_preset_execute);
         execute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

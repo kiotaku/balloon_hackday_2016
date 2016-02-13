@@ -22,8 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:textSize="15sp"
             android:id="@+id/icon_select_item_left_name"
-            android:gravity="center_horizontal"
-            android:text="aaaaa" />
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 

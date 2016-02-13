@@ -29,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:id="@+id/add_preset_preset_name"/>
+            android:id="@+id/add_preset_preset_name"
+            android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -44,20 +45,33 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"/>
+            android:text="Location"
+            android:textSize="18dp" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textSize="20dp"
-            android:id="@+id/add_preset_location_name"/>
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/add_preset_location"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20dp"
+                android:id="@+id/add_preset_location_name"
+                android:layout_weight="1" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:text="BootstrapButton"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:showOutline="false"
+                app:roundedCorners="true"
+                app:bootstrapText="Select {fa_edit}"
+                android:id="@+id/add_preset_location"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -72,43 +86,71 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SoundFile"/>
+            android:text="SoundFile"
+            android:textSize="18dp" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textSize="20dp"
-            android:id="@+id/add_preset_sound_file_name"/>
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/add_preset_sound_file"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20dp"
+                android:id="@+id/add_preset_sound_file_name"
+                android:layout_weight="1" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:text="BootstrapButton"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:showOutline="false"
+                app:roundedCorners="true"
+                app:bootstrapText="Select {fa_edit}"
+                android:id="@+id/add_preset_sound_file"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Icon"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:layout_width="@dimen/add_ringtone_preset_image_button_dp"
-        android:layout_height="@dimen/add_ringtone_preset_image_button_dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/ic_brightness"
-        android:src="@drawable/ic_help"
-        android:id="@+id/add_preset_icon_select"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Icon"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="18dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginRight="20dp"
-        android:id="@+id/add_preset_execute"/>
+        <ImageButton
+            android:layout_width="@dimen/add_ringtone_preset_image_button_dp"
+            android:layout_height="@dimen/add_ringtone_preset_image_button_dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/ic_brightness"
+            android:src="@drawable/ic_help"
+            android:id="@+id/add_preset_icon_select"/>
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:text="BootstrapButton"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:showOutline="false"
+            app:roundedCorners="true"
+            app:bootstrapText="OK {fa_check}"
+            android:id="@+id/add_preset_execute"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
 
 </LinearLayout>
