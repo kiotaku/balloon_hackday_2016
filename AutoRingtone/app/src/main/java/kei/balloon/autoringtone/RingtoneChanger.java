@@ -6,10 +6,13 @@ import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +31,16 @@ public class RingtoneChanger {
     boolean isDefault = true;
 
     MainActivity context; //MainActivity
+    ImageView iconView;
+    TextView areaNameView, musicTitleView;
     AudioManager am;
 
     //こんすとらくた
     public RingtoneChanger(MainActivity ma){
         context = ma;
+        iconView = (ImageView)context.findViewById(R.id.area_icon);
+        areaNameView = (TextView)context.findViewById(R.id.area_status);
+        musicTitleView = (TextView)context.findViewById(R.id.music_status);
         presets = new ArrayList<>();
 
         defaultPresetUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
@@ -68,7 +76,6 @@ public class RingtoneChanger {
             /*** debug ***/
             am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
             isMoving = true;
-            return;
             /*************/
         } else {
             isMoving = false;
@@ -85,6 +92,7 @@ public class RingtoneChanger {
             if (min <= RingtonePreset.RANGE) setRingtoneOfActivePreset(); //範囲内に設定されたプリセットがあるなら設定
             else setRingtoneOfDefaultPreset(); //なければデフォルトに設定
         }
+        updateState();
     }
 
     //着信音をアクティブなプリセットに設定
@@ -115,5 +123,33 @@ public class RingtoneChanger {
 
     public boolean isMoving(){
         return isMoving;
+    }
+
+    public void updateState(){
+        if  (!isMoving){
+            if  (activePreset == null) return;
+
+            switch (activePreset.getIconIndex()){
+                case RingtonePreset.SCHOOL:
+                    iconView.setImageResource(R.drawable.schoolicon);
+                    break;
+                case RingtonePreset.WORKSPACE:
+                    iconView.setImageResource(R.drawable.workspaceicon);
+                    break;
+                case RingtonePreset.HOME:
+                    iconView.setImageResource(R.drawable.houseicon);
+                    break;
+            }
+            areaNameView.setText(activePreset.getName());
+            String path = activePreset.getUri().getPath();
+            String[] tmp = path.split("/");
+            String musicTitle = tmp[tmp.length-1];
+            musicTitleView.setText(musicTitle);
+        } else {
+            iconView.setImageResource(R.drawable.trainicon);
+            areaNameView.setText("移動中...");
+            musicTitleView.setText("マナーモード中");
+        }
+
     }
 }

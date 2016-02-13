@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity{
         Uri u;
         f = new File("/storage/emulated/0/Music/01 海色.mp3");
         u = Uri.fromFile(f);
-        RingtonePreset rp1 = new RingtonePreset("八王子", u, new LatLng(35.6396765, 139.2967701), 1);
+        RingtonePreset rp1 = new RingtonePreset("八王子", u, new LatLng(35.6396765, 139.2967701), RingtonePreset.HOME);
 
         f = new File("/storage/emulated/0/Music/01 海色.mp3");
         u = Uri.fromFile(f);
-        RingtonePreset rp2 = new RingtonePreset("秋葉原UDX", u, new LatLng(35.6994511, 139.7726449), 2);
+        RingtonePreset rp2 = new RingtonePreset("秋葉原UDX", u, new LatLng(35.6994511, 139.7726449), RingtonePreset.WORKSPACE);
 
         rc.addPreset(rp1);
         rc.addPreset(rp2);
