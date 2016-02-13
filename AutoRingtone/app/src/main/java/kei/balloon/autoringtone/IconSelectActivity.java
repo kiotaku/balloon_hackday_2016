@@ -39,10 +39,10 @@ public class IconSelectActivity extends Activity {
         for(Field tmp : drawableIDs){
             try {
                 String name = tmp.getName();
-                if(name.matches("^icon_[[a-z][0-9]_]*$") && !name.matches("^icon_background$")){
+                if(name.matches(".*icon$")){
                     int value = (Integer) tmp.get(name);
                     Map<String,Integer> tmpMap = new ArrayMap<>();
-                    tmpMap.put(name.split("_",2)[1],value);
+                    tmpMap.put(name.replace("icon",""),value);
                     tmpList.add(tmpMap);
                 }
             } catch (IllegalAccessException e) {
