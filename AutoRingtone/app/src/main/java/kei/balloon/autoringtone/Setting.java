@@ -46,7 +46,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
     private String targetName;
     private Button searchBtn;
 
-    Setting set;
+    private static Setting set;
 
     private InputMethodManager inputMethodManager;
 
@@ -82,10 +82,23 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
                 // 地図の初期設定を行うメソッドの呼び出し
                 mapInit();
             }
+            if (googleMap != null) {
+                // タップ時のイベントハンドラ登録
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng point) {
+                        // TODO Auto-generated method stub
+                        MapInit(new LatLng(point.latitude, point.longitude));
+                    }
+                });
+
+            }
         }
         // GoogleMapが使用不可のときのためにtry catchで囲っています。
         catch (Exception e) {
         }
+
+
 
     }
 
@@ -106,7 +119,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        googleMap.setMyLocationEnabled(true);
+        googleMap.setMyLocationEnabled(false);
 
         // 東京駅の位置、ズーム設定
         CameraPosition camerapos = new CameraPosition.Builder()
@@ -116,7 +129,60 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
     }
 
+    private void MapInit(LatLng ll){
+        // 東京駅の位置、ズーム設定
+        CameraPosition camerapos = new CameraPosition.Builder()
+                .target(ll).zoom(googleMap.getCameraPosition().zoom).build();
+        targetLatLng = ll;
+        try {
+            targetAddress = point2address(ll);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+
+        googleMap.clear();
+
+        // 地図の中心の変更する
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerapos));
+        // ピンを立てる
+        MarkerOptions options = new MarkerOptions();
+        options.position(ll);
+        try {
+            options.title(point2address(ll).getFeatureName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        googleMap.addMarker(options);
+    }
+
+    // 座標から住所文字列へ変換
+    public Address point2address(LatLng latlng)
+            throws IOException
+    {
+
+        Address address;
+        // 変換実行
+        Geocoder coder = new Geocoder(set.getApplicationContext(), Locale.JAPAN);
+        List<Address> list_address = coder.getFromLocation(latlng.latitude, latlng.longitude, 1);
+
+        if (!list_address.isEmpty()){
+
+            // 変換成功時は，最初の変換候補を取得
+            address = list_address.get(0);
+            StringBuffer sb = new StringBuffer();
+
+            // adressの大区分から小区分までを改行で全結合
+            String s;
+            for (int i = 0; (s = address.getAddressLine(i)) != null; i++){
+                sb.append( s + "\n" );
+            }
+            return address;
+
+        }
+
+        return null;
+    }
 
     // 座標から住所文字列へ変換
     public Address nameToAddress(String localeName, Context context) throws IOException
@@ -143,47 +209,50 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.go) {
             inputMethodManager.hideSoftInputFromWindow(searchETxt.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-            if (!searchETxt.getText().equals(null))
+
                 try {
-                    targetAddress = nameToAddress(searchETxt.getText().toString(), set);
-                    if (!targetAddress.equals(null)) {
-                        targetName = targetAddress.getFeatureName();
-                        targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
-                        // アラートダイアログのタイトルを設定します
-                        alertDialogBuilder.setTitle("検索結果");
-                        // アラートダイアログのメッセージを設定します
-                        alertDialogBuilder.setMessage(targetName + "でいいですか?");
-                        // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                        alertDialogBuilder.setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent();
-                                        intent.putExtra("lat", targetLatLng.latitude);
-                                        intent.putExtra("lng", targetLatLng.longitude);
-                                        intent.putExtra("locationName", targetName);
-                                        setResult(RESULT_OK, intent);
-                                        finish();
-                                    }
-                                });
-                        // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                        alertDialogBuilder.setNegativeButton("CANCEL",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        searchETxt.setText("");
-                                    }
-                                });
-                        // アラートダイアログのキャンセルが可能かどうかを設定します
-                        alertDialogBuilder.setCancelable(true);
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        // アラートダイアログを表示します
-                        alertDialog.show();
-                    }
+                        if(!searchETxt.getText().toString().equals("") ) targetAddress = nameToAddress(searchETxt.getText().toString(),set);
+                        if(targetAddress !=null) {
+                            targetName = targetAddress.getFeatureName();
+                            targetLatLng = new LatLng(targetAddress.getLatitude(), targetAddress.getLongitude());
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(set);
+                            // アラートダイアログのタイトルを設定します
+                            alertDialogBuilder.setTitle("検索結果");
+                            // アラートダイアログのメッセージを設定します
+                            alertDialogBuilder.setMessage(targetName + "でいいですか?");
+                            // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                            alertDialogBuilder.setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent();
+                                            intent.putExtra("lat", targetLatLng.latitude);
+                                            intent.putExtra("lng", targetLatLng.longitude);
+                                            intent.putExtra("locationName", targetName);
+                                            setResult(RESULT_OK, intent);
+                                            finish();
+                                        }
+                                    });
+                            // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                            alertDialogBuilder.setNegativeButton("CANCEL",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            searchETxt.setText("");
+                                        }
+                                    });
+                            // アラートダイアログのキャンセルが可能かどうかを設定します
+                            alertDialogBuilder.setCancelable(true);
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            // アラートダイアログを表示します
+                            alertDialog.show();
+                        }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+        }
     }
 }
